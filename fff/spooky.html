@@ -4,12 +4,10 @@
     <title>Very Spooooooky Mind Reader</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
-<body onload="chooseFear()">
+<body>
 
 <script type="text/javascript">
     
-	var randNum;
-	
 	var fearscores = [[0, 0], [0, 0], [0, 0]];
 	
 	function getRandomIntInclusive(min, max) {
@@ -17,11 +15,16 @@
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
+
+
 	function chooseFear(){
 		//0= reptile, 1= bug, 2= ghost
-		var randInt= getRandomIntInclusive(0,2);
+		var randInt= getRandomIntInclusive(0,2);//manually update!!!
 		var randInt1= getRandomIntInclusive(0,1);
-		var fears = [["fearImagesTest/reptile1.jpeg", "fearImagesTest/reptile2.jpeg"], ["fearImagesTest/bug1.jpeg", "fearImagesTest/bug2.jpeg"], ["fearImagesTest/figure1.jpeg", "fearImagesTest/figure2.jpg"]];
+		var fears = [
+		["fearImagesTest/reptile1.jpeg", "fearImagesTest/reptile2.jpeg"], 
+		["fearImagesTest/bug1.jpeg", "fearImagesTest/bug2.jpeg"], 
+		["fearImagesTest/figure1.jpeg", "fearImagesTest/figure2.jpg"]];
 		//document.getElementById("demo").innerHTML = fears[randInt][randInt1];
 		document.querySelector("#fearChoice").src = fears[randInt][randInt1];
 		var scoreUpdate = chooseReact();
@@ -68,7 +71,7 @@
 
         // Display the image.
         //var sourceImageUrl = document.getElementById("inputImage").value;
-        document.querySelector("#sourceImage").src = sourceImageUrl;
+        //document.querySelector("#sourceImage").src = sourceImageUrl;
 
 
         // Perform the REST API call.
@@ -116,28 +119,23 @@
 	
 	};
 	
-
+	function playball(){
+		
+		document.cookie = "finalscore=fearscores";
+	}
 </script>
 
 <center><h1>Get ready to be SCARIFIED:</h1>
 
 <button onclick="chooseFear()">Check</button>
 <br>
+<img id="fearChoice"/ align="middle">
+<br><br>
+<img id="reactChoice"/ align="middle">
 <div id="scaryNumber" style="width:60px; display:table-cell;">
 		<textarea id="scaryResponseTextArea" class="UIInput" style="width:60px; height:60px;"></textarea>
 </div>
-<img id="reactChoice"/ align="middle">
-<br><br>
-<img id="fearChoice"/ align="middle"></center>
-
-
-<div id="wrapper" style="width:1020px; display:table;">
-	
-    <div id="imageDiv" style="display:none; display:table-cell;">
-        <img id="sourceImage" width="0" />
-    </div>
-
-</div>
+</center>
 
 </body>
 </html>
