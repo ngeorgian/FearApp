@@ -4,11 +4,16 @@
     <title>Very Spooooooky Mind Reader</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
-<body onload="playball()">
+<body onload="start()">
 
 <script type="text/javascript">
     
 	var fearscores = [[0, 0], [0, 0], [0, 0]];
+	var fearscoresboolean = [[false, false],[false, false],[false, false]];
+	var randInt = 0;
+	var randInt1 = 0;
+	var rowCounter = [0,0,0]
+
 	
 	function getRandomIntInclusive(min, max) {
 	min = Math.ceil(min);
@@ -19,8 +24,10 @@
 
 	function chooseFear(){
 		//0= reptile, 1= bug, 2= ghost
-		var randInt= getRandomIntInclusive(0,2);//manually update!!!
-		var randInt1= getRandomIntInclusive(0,1);
+		console.log("choose fear called");
+		randInt= getRandomIntInclusive(0,2);//manually update!!!
+		rowCounter[randInt] = rowCounter[randInt] + 1;
+		randInt1= getRandomIntInclusive(0,1);
 		var fears = [
 		["fearImagesTest/reptile1.jpeg", "fearImagesTest/reptile2.jpeg"], 
 		["fearImagesTest/bug1.jpeg", "fearImagesTest/bug2.jpeg"], 
@@ -28,7 +35,8 @@
 		//document.getElementById("demo").innerHTML = fears[randInt][randInt1];
 		document.querySelector("#fearChoice").src = fears[randInt][randInt1];
 		var scoreUpdate = chooseReact();
-		fearscores[randInt][randInt1] += scoreUpdate;
+
+
 		
 	}
 	
@@ -40,8 +48,9 @@
 		"http://images.genius.com/8a5471657b66831b1b025096dbb6d7af.390x390x1.jpg",
 		"http://thefw.com/files/2016/04/Scared.jpg?w=600&h=0&zc=1&s=0&a=t&q=89"];
 		document.querySelector("#reactChoice").src = reacts[randInt];
-		fearFactor = processImage(reacts[randInt]);
-		$("#scaryResponseTextArea").val(fearFactor);
+		var fearFactor = processImage(reacts[randInt]);
+		//$("#scaryResponseTextArea").val(fearFactor);
+		console.log(fearFactor);
 		return fearFactor;
 	}
 	function processImage(sourceImageUrl) {
@@ -52,6 +61,8 @@
         // Replace the subscriptionKey string value with your valid subscription key.
         var subscriptionKey = "fdef7e0879ad49f0b6cd0501bbb2b5f9";
 
+		var ret = 0;
+		
         // Replace or verify the region.
         //
         // You must use the same region in your REST API call as you used to obtain your subscription keys.
@@ -101,9 +112,10 @@
 			if(isNaN(ret)){
 				ret = 0;
 			}
-
+		fearscores[randInt][randInt1] += ret;
+		fearscoresboolean[randInt][randInt1] = true;
 		$("#scaryResponseTextArea").val(ret);
-
+		
 		})
 
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -129,24 +141,84 @@
 }
 	
 	function playball(){
+	time = 0;
 	
+		start();
 		for (var i = 0; i < 4; i++) { 
-			window.setTimeout(chooseFear, 3000);
 			
+			setTimeout(chooseFear, time);
+			console.log("Reached playball loop");
+			time += 3000;
 		}
-
 		
-		finale();
+		setTimeout(finale, time);
+	}
+	
+	function start(){
+		
 	}
 	
 	function finale() {
+		console.log(fearscores);
+		var finalArray = new Array(3);
+		var topicTotal=0;
+		//Double loop to check if each topic is used
+		for(var topicCounter = 0; topicCounter < 3; topicCounter++){
+		var topicUsed = false;
 		
+			for(var elementCounter = 0; elementCounter < 2; elementCounter++){
+			var text;
+			
+				//If the topic is used, then average out the scores of the selected topic and break from the elementCounter
+
+				if(fearscoresboolean[topicCounter][elementCounter] == true && topicUsed == false){
+				topicUsed = true;
+					var elementsUsed = 0;
+
+				
+				
+					//Loops through each element of topic. If it's used, add it to the average
+					for(var elementCounter2 = 0; elementCounter2 < 2; elementCounter2++){
+						
+						if(fearscoresboolean[topicCounter][elementCounter2] == true){
+						
+						topicTotal = topicTotal + fearscores[topicCounter][elementCounter2]; 
+						elementsUsed = elementsUsed + 1;
+						
+						}
+						
+				}
+				console.log(elementsUsed,topicTotal);
+				topicTotal = topicTotal / Math.max(rowCounter[topicCounter], 1);
+				
+				//Make text depending on what topic was used
+				if(topicCounter == 0)text = "Reptiles: " + topicTotal;
+				else if(topicCounter == 1)text = "Bugs: " + topicTotal;
+				else text = "Ghosts: " + topicTotal;
+				
+				//Add the topic to the final array
+				topicTotal = 0;
+				finalArray[topicCounter] = text;
+				
+			}
+			//If the topic has no used elements, return the string saying that the topic was not used
+			if(elementCounter == 1 && topicUsed == false){
+				if(topicCounter == 0)text = "Reptiles: Not used";
+				else if(topicCounter == 1)text = "Bugs: Not used";
+				else text = "Ghosts: Not used";
+				
+				finalArray[topicCounter] = text;
+			}
+		}
+		$("#scaryResponseTextArea").val(finalArray);
 	}
+}
+
 </script>
 
 <center><h1>Get ready to be SCARIFIED:</h1>
 
-<button onclick="chooseFear()">Check</button>
+<button onclick="playball()">Click to begin...</button>
 <br>
 <img id="fearChoice"/ align="middle">
 <br><br>
