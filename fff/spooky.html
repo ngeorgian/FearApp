@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Very Spooooooky Mind Reader</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    function processImage() {
+        // **********************************************
+        // *** Update or verify the following values. ***
+        // **********************************************
+
+        // Replace the subscriptionKey string value with your valid subscription key.
+        var subscriptionKey = "fdef7e0879ad49f0b6cd0501bbb2b5f9";
+
+        // Replace or verify the region.
+        //
+        // You must use the same region in your REST API call as you used to obtain your subscription keys.
+        // For example, if you obtained your subscription keys from the westus region, replace
+        // "westcentralus" in the URI below with "westus".
+        //
+        // NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
+        // a free trial subscription key, you should not need to change this region.
+        var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+
+        // Request parameters.
+        var params = {
+            "returnFaceId": "false",
+            "returnFaceLandmarks": "false",
+            "returnFaceAttributes": "emotion",
+        };
+
+        // Display the image.
+        var sourceImageUrl = document.getElementById("inputImage").value;
+        document.querySelector("#sourceImage").src = sourceImageUrl;
+
+
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+
+            // Request headers.
+            beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+
+            type: "POST",
+
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+
+        .done(function(data) {
+            // Show formatted JSON on webpage.
+		mystring = (JSON.stringify(data, null, 2));
+		pos = mystring.indexOf("fear") + 7;
+		ender = mystring.indexOf(",", pos)
+		ret = mystring.slice(pos, ender);
+		ret = parseFloat(ret);
+
+		//$("#responseTextArea").val(JSON.stringify(data, null, 2));
+
+		})
+
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            // Display error message.
+            var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+            errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ? 
+                jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+            alert(errorString);
+        });
+    
+	if(isNaN(ret)){
+	ret = 0;
+	}
+	return ret;
+	
+	};
+	
+	function scareFactor(){
+		var numbah = processImage();
+		$("#scaryResponseTextArea").val(numbah);
+		return numbah;
+	}
+</script>
+
+<h1>Get ready to be SCARIFIED:</h1>
+
+Image to analyze: <input type="text" name="inputImage" id="inputImage" value="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/hostedimages/1380413706i/814942.jpg" />
+
+<button onclick="scareFactor()">Analyze factor</button>
+
+<div id="wrapper" style="width:1020px; display:table;">
+
+
+	<div id="scaryNumber" style="width:60px; display:table-cell;">
+		<textarea id="scaryResponseTextArea" class="UIInput" style="width:60px; height:60px;"></textarea>
+	</div>
+</div>
+    <div id="imageDiv" style="display:none; display:table-cell;">
+        <img id="sourceImage" width="0" />
+    </div>
+</body>
+</html>
