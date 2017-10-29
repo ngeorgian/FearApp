@@ -4,7 +4,7 @@
     <title>Very Spooooooky Mind Reader</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
-<body>
+<body onload="playball()">
 
 <script type="text/javascript">
     
@@ -28,7 +28,7 @@
 		//document.getElementById("demo").innerHTML = fears[randInt][randInt1];
 		document.querySelector("#fearChoice").src = fears[randInt][randInt1];
 		var scoreUpdate = chooseReact();
-		
+		fearscores[randInt][randInt1] += scoreUpdate;
 		
 	}
 	
@@ -119,9 +119,28 @@
 	
 	};
 	
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+	
 	function playball(){
+	
+		for (var i = 0; i < 4; i++) { 
+			window.setTimeout(chooseFear, 3000);
+			
+		}
+
 		
-		document.cookie = "finalscore=fearscores";
+		finale();
+	}
+	
+	function finale() {
+		
 	}
 </script>
 
