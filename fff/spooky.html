@@ -2,18 +2,19 @@
 <html>
 <head>
     <title>Very Spooooooky Mind Reader</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
 <body>
 
 <script type="text/javascript">
-    
+
 	var fearscores = [[0, 0], [0, 0], [0, 0]];
-	
+
 	function getRandomIntInclusive(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+	return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
 
 
@@ -22,16 +23,16 @@
 		var randInt= getRandomIntInclusive(0,2);//manually update!!!
 		var randInt1= getRandomIntInclusive(0,1);
 		var fears = [
-		["fearImagesTest/reptile1.jpeg", "fearImagesTest/reptile2.jpeg"], 
-		["fearImagesTest/bug1.jpeg", "fearImagesTest/bug2.jpeg"], 
+		["fearImagesTest/reptile1.jpeg", "fearImagesTest/reptile2.jpeg"],
+		["fearImagesTest/bug1.jpeg", "fearImagesTest/bug2.jpeg"],
 		["fearImagesTest/figure1.jpeg", "fearImagesTest/figure2.jpg"]];
 		//document.getElementById("demo").innerHTML = fears[randInt][randInt1];
 		document.querySelector("#fearChoice").src = fears[randInt][randInt1];
 		var scoreUpdate = chooseReact();
-		
-		
+
+
 	}
-	
+
 	function chooseReact(){
 		var randInt = getRandomIntInclusive(0,4);
 		var reacts = ["https://images.vice.com/vice/images/articles/meta/2016/07/29/how-scared-should-i-be-of-putin-1469822159.jpg?crop=1xw:0.7885514018691588xh;center,center&resize=1050:*",
@@ -109,18 +110,18 @@
         .fail(function(jqXHR, textStatus, errorThrown) {
             // Display error message.
             var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ? 
+            errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
                 jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
             alert(errorString);
         });
-    
+
 
 	return ret;
-	
+
 	};
-	
+
 	function playball(){
-		
+
 		document.cookie = "finalscore=fearscores";
 	}
 </script>
