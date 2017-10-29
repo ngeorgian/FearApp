@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
-<body>
+<body onload="playball()">
 
 <script type="text/javascript">
 
@@ -29,8 +29,13 @@
 		//document.getElementById("demo").innerHTML = fears[randInt][randInt1];
 		document.querySelector("#fearChoice").src = fears[randInt][randInt1];
 		var scoreUpdate = chooseReact();
+<<<<<<< HEAD
 
 
+=======
+		fearscores[randInt][randInt1] += scoreUpdate;
+		
+>>>>>>> c74b9dfea8d0f53d554700692d07e08cd12dc823
 	}
 
 	function chooseReact(){
@@ -119,10 +124,36 @@
 	return ret;
 
 	};
+<<<<<<< HEAD
 
 	function playball(){
 
 		document.cookie = "finalscore=fearscores";
+=======
+	
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+	
+	function playball(){
+	
+		for (var i = 0; i < 4; i++) { 
+			window.setTimeout(chooseFear, 3000);
+			
+		}
+
+		
+		finale();
+	}
+	
+	function finale() {
+		
+>>>>>>> c74b9dfea8d0f53d554700692d07e08cd12dc823
 	}
 </script>
 
