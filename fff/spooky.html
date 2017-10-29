@@ -43,15 +43,19 @@
 	}
 	
 	function chooseReact(){
+
 		var randInt = getRandomIntInclusive(0,4);
 		var reacts = ["https://images.vice.com/vice/images/articles/meta/2016/07/29/how-scared-should-i-be-of-putin-1469822159.jpg?crop=1xw:0.7885514018691588xh;center,center&resize=1050:*",
 		"https://thumbs.dreamstime.com/b/shocked-fearful-man-23408442.jpg",
 		"https://blogs.scientificamerican.com/media/inline/blog/Image/scared_man.jpg",
 		"http://images.genius.com/8a5471657b66831b1b025096dbb6d7af.390x390x1.jpg",
 		"http://thefw.com/files/2016/04/Scared.jpg?w=600&h=0&zc=1&s=0&a=t&q=89"];
+
+			
 		document.querySelector("#reactChoice").src = reacts[randInt];
 		var fearFactor = processImage(reacts[randInt]);
 		//$("#scaryResponseTextArea").val(fearFactor);
+		
 		console.log(fearFactor);
 		return fearFactor;
 	}
@@ -146,7 +150,7 @@
 	time = 0;
 	
 		start();
-		for (var i = 0; i < 4; i++) { 
+		for (var i = 0; i < 6; i++) { 
 			
 			setTimeout(chooseFear, time);
 			console.log("Reached playball loop");
@@ -194,9 +198,9 @@
 				topicTotal = topicTotal / Math.max(rowCounter[topicCounter], 1);
 				
 				//Make text depending on what topic was used
-				if(topicCounter == 0)text = "Reptiles: " + topicTotal;
-				else if(topicCounter == 1)text = "Bugs: " + topicTotal;
-				else text = "Ghosts: " + topicTotal;
+				if(topicCounter == 0)text = "Reptiles: " + topicTotal*100;
+				else if(topicCounter == 1)text = "Bugs: " + topicTotal*100;
+				else text = "Ghosts: " + topicTotal*100 ;
 				
 				//Add the topic to the final array
 				topicTotal = 0;
@@ -239,9 +243,6 @@
     <img id="reactChoice"/>
   </div>
 <div>
-
-
-
 
 </body>
 </html>
