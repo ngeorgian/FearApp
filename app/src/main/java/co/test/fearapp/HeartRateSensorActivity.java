@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class HeartRateSensorActivity extends AppCompatActivity {
@@ -35,24 +37,30 @@ public class HeartRateSensorActivity extends AppCompatActivity {
         images[4] = new ImageClass(ContextCompat.getDrawable(this, R.drawable.reptile1), reptile);
         images[5] = new ImageClass(ContextCompat.getDrawable(this, R.drawable.reptile2), reptile);
 
-        int imageCounter[] = new int[6];
-        int curInt;
+        //Create an imageCounter to help with randomness. Time is for how long each picture has. Iterations is how many pictures there are. curInt creates a random int that
+        //hasn't been used yet
+        int imageCounter[] = {1,1,1,1,1,1};
+        int time = 0; int iterations = 6;
+        int curInt = (int) (Math.random() * 6);
 
-        while(imageCounter.length > 0){
-            curInt = (int) Math.random() * imageCounter.length;
-            
+        while(iterations > 0) {
+            //While the number has already been used, it keeps generating random numbers
+            while(imageCounter[curInt] == -1){ curInt = (int) (Math.random() * 6); System.out.println("curInt " + curInt); System.out.println("imageCounter " + imageCounter[curInt]);}
 
-            if(curInt != imageCounter.length - 1) images[curInt] = images[imageCounter.length - 1];
-            int[] newImageCounter = new int[imageCounter.length - 1];
-            for(int counter = 0; counter < imageCounter.length - 2; counter++){ newImageCounter[counter] = imageCounter[counter];}
-            newImageCounter = imageCounter;
+            final ImageClass dynamicCurrent = images[curInt];
+
+            //Every (time) milliseconds, a new picture is shown
+            timer.postDelayed(new Runnable() {
+                public void run() {
+                    currentImage.setImageDrawable(dynamicCurrent.getImage());
+                }
+            }, time);
+
+            //Iterate time between pictures, make the imageCounter[curInt] -1 so it will be skipped, decrement iterations
+            time += 2000;
+            imageCounter[curInt] = -1;
+            iterations--;
+
         }
-        currentImage.setImageDrawable(images[5].getImage());
-        final ImageClass cur = images[3];
-        timer.postDelayed(new Runnable() {
-            public void run() {
-                currentImage.setImageDrawable(cur.getImage());
-            }
-        }, 2000);
     }
 }
