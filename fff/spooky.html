@@ -29,13 +29,7 @@
 		//document.getElementById("demo").innerHTML = fears[randInt][randInt1];
 		document.querySelector("#fearChoice").src = fears[randInt][randInt1];
 		var scoreUpdate = chooseReact();
-<<<<<<< HEAD
-
-
-=======
 		fearscores[randInt][randInt1] += scoreUpdate;
-		
->>>>>>> c74b9dfea8d0f53d554700692d07e08cd12dc823
 	}
 
 	function chooseReact(){
@@ -124,13 +118,7 @@
 	return ret;
 
 	};
-<<<<<<< HEAD
 
-	function playball(){
-
-		document.cookie = "finalscore=fearscores";
-=======
-	
 	function sleep(milliseconds) {
 		var start = new Date().getTime();
 		for (var i = 0; i < 1e7; i++) {
@@ -139,21 +127,20 @@
     }
   }
 }
-	
+
 	function playball(){
-	
-		for (var i = 0; i < 4; i++) { 
+
+		for (var i = 0; i < 4; i++) {
 			window.setTimeout(chooseFear, 3000);
-			
+
 		}
 
-		
+
 		finale();
 	}
-	
+
 	function finale() {
-		
->>>>>>> c74b9dfea8d0f53d554700692d07e08cd12dc823
+
 	}
 </script>
 
