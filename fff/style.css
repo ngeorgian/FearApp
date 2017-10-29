@@ -1,0 +1,68 @@
+body{
+  background-color: #181818;
+  font-size: 28px;
+}
+
+.header h1 {
+  color: #b20000;
+  font-family: 'Amatic SC', cursive;
+  font-size: 500%;
+  font-weight: lighter;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.header h2 {
+  color: #b20000;
+  font-family: 'Josefin Slab', serif;
+  font-size: 150%;
+  text-align: center;
+  padding-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#scaryResponseTextArea {
+  width: 100px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: auto;
+}
+
+.container .pictures {
+  max-width: 35em;
+  height: 100%;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+
+.container .pictures img{
+  max-width: 45%;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  float: left;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px 45px;
+  font-size: 24px;
+  text-align: center;
+  color: #b20000;
+  background-color: #181818;
+  border-radius: 15px;
+  border-color: #b20000;
+}
+
+button:hover {background-color: }
